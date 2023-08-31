@@ -9,8 +9,18 @@ Copy and edit package.json
   "description": "Quick config for node projects",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "test"
-  },
+      "dev": "run-p watch:*",
+      "watch:compile": "swc src -w --out-dir dist",
+      "watch:dev": "nodemon --watch \"dist/**/*\" -e js ./dist/index.js",
+      "build": "swc src -d dist",
+      "start": "node dist/index.js NODE_ENV=production",
+      "clean": "rm -rf dist",
+      "debug": "run-s test:*",
+      "test": "jest --detectOpenHandles",
+      "test:watch": "jest --watch",
+      "test:coverage": "jest --coverage",
+      "lint": "eslint \"{src,apps,libs,test,spec}/**/*.ts\" --fix"
+    },
   "dependencies": {
     "dotenv": "^16.0.3",
     "redis": "^4.6.6",
