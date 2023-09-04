@@ -26,7 +26,7 @@ export function createDogController(dogService: DogService): DogController {
       }
     },
     addDog: async (ctx) => {
-      await dogService.addDog(ctx.body as Dog);
+      await dogService.addDog(ctx.request.body as Dog);
       ctx.status = 201;
       ctx.body = { message: "Dog added successfully" };
     },
