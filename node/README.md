@@ -1,7 +1,7 @@
 
 #### Basic package.json
 
-Copy and edit package.json
+Copy and edit package.json to use one of the server frameworks
 ```
 {
   "name": "node_scaffold",
@@ -22,34 +22,36 @@ Copy and edit package.json
       "lint": "eslint \"{src,apps,libs,test,spec}/**/*.ts\" --fix"
     },
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "redis": "^4.6.6",
-    "winston": "^3.8.2",
-    "redoc": "^2.1.1",
-    "passport": "^0.6.0",
     "awilix": "^8.0.1",
+    "dotenv": "^16.0.3",
+    "passport": "^0.6.0",
+    "redoc": "^2.1.1",
+    "redis": "^4.6.6",
+    "pino-pretty": "^10.2.0", 
+    "winston": "^3.8.2"
     // Express only Modules
     "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "morgan": "^1.10.0",
-    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "express-session": "^1.17.3",
     "helmet": "^7.0.0",
+    "morgan": "1.10.0",
+    "body-parser": "^1.20.2",
     // Koa only Modules
     "koa": "^2.14.2",
-    "@koa/bodyparser": "^5.0.0",
-    "@koa/cors": "^4.0.0",
     "koa-helmet": "^7.0.2",
     "koa-logger": "^3.2.1",
+    "@koa/bodyparser": "^5.0.0",
+    "@koa/cors": "^4.0.0",
+    "@koa/router": "^12.0.0",
     // Fastify only Modules
     "fastify": "^4.22.0",
-    "@fastify/redis": "^6.1.1",
     "@fastify/awilix": "^3.2.0",
-    "@fastify/passport": "^2.3.0",
     "@fastify/cookie": "^9.0.4",
     "@fastify/cors": "^8.3.0",
     "@fastify/helmet": "^11.0.0",
-    "@fastify/swagger": "^8.9.0"
+    "@fastify/passport": "^2.3.0",
+    "@fastify/redis": "^6.1.1",
+    "@fastify/swagger": "^8.9.0",
   },
   "devDependencies": {
     "typescript": "^5.0.4",
@@ -75,7 +77,12 @@ Copy and edit package.json
     "@types/express": "^4.17.17",
     "@types/cors": "^2.8.13",
     "@types/cookie-parser": "^1.4.3",
-    "@types/morgan": "^1.9.4"
+    "@types/morgan": "^1.9.4",
+    // Koa Types
+    "@types/koa": "^2.13.8",
+    "@types/koa__cors": "^4.0.0",
+    "@types/koa__router": "^12.0.0",
+    "@types/koa-logger": "^3.1.2"
   },
   "repository": {
     "type": "git",
@@ -100,9 +107,6 @@ https://github.com/orgs/fastify/repositories?type=all
 https://github.com/israeleriston/awesome-fastify
 
 #### More libs
-
-
-
 To update dependencies
 ```
 npx npm-check-updates -u
