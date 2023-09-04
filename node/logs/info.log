@@ -1,0 +1,9 @@
+{"level":"info","message":"bootstraping server...","timestamp":"2023-09-01T04:23:05.979Z"}
+{"level":"info","message":"initiating container...","timestamp":"2023-09-01T04:23:06.009Z"}
+{"level":"info","message":"running on port: 3000","timestamp":"2023-09-01T04:23:06.026Z"}
+{"level":30,"time":"2023-09-01T04:29:13.780Z","pid":23592,"hostname":"Pietro-Note-Acer-LAPTOP-37VN90M4","msg":"bootstraping server..."}
+{"level":30,"time":"2023-09-01T04:29:13.818Z","pid":23592,"hostname":"Pietro-Note-Acer-LAPTOP-37VN90M4","msg":"initiating container..."}
+{"level":30,"time":"2023-09-01T04:29:13.843Z","pid":23592,"hostname":"Pietro-Note-Acer-LAPTOP-37VN90M4","msg":"running on port: 3000"}
+{"level":30,"time":"2023-09-01T04:29:50.045Z","pid":19664,"hostname":"Pietro-Note-Acer-LAPTOP-37VN90M4","msg":"bootstraping server..."}
+{"level":30,"time":"2023-09-01T04:29:50.086Z","pid":19664,"hostname":"Pietro-Note-Acer-LAPTOP-37VN90M4","msg":"initiating container..."}
+{"level":30,"time":"2023-09-01T04:29:50.115Z","pid":19664,"hostname":"Pietro-Note-Acer-LAPTOP-37VN90M4","msg":"running on port: 3000"}
