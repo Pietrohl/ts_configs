@@ -20,6 +20,7 @@ import {
 } from "../features/dogs";
 import type { DogController as DogExpressController } from "../features/dogs/controllers/express/dog.controller";
 import type { DogController as DogKoaController } from "../features/dogs/controllers/koa/dog.controller";
+import type { FastifyPluginCallback } from "fastify";
 
 // Add services, controllers and config here
 export interface AppContainer {
@@ -42,6 +43,15 @@ export interface KoaAppContainer extends AppContainer {
   dogRouter: KoaRouter;
 }
 
+// Add Fastify specific services, controllers and config here
+export interface FastifyAppContainer extends AppContainer {
+  dogController: DogExpressController;
+  dogRouter: FastifyPluginCallback;
+}
+
+export function configureContainer(
+  containerType: "fastify"
+): AwilixContainer<FastifyAppContainer>;
 export function configureContainer(
   containerType: "express"
 ): AwilixContainer<ExpressAppContainer>;
@@ -49,7 +59,7 @@ export function configureContainer(
   containerType: "koa"
 ): AwilixContainer<KoaAppContainer>;
 export function configureContainer(
-  containerType: "express" | "koa"
+  containerType: "express" | "koa" | "fastify"
 ): AwilixContainer {
   logger.info("initiating container...");
 
@@ -57,9 +67,16 @@ export function configureContainer(
     injectionMode: InjectionMode.CLASSIC,
   };
 
-  let container: AwilixContainer<KoaAppContainer | ExpressAppContainer>;
+  let container: AwilixContainer<
+    KoaAppContainer | ExpressAppContainer | FastifyAppContainer
+  >;
 
   switch (containerType) {
+    case "fastify":
+      // Create a new Awilix container
+      container = createContainer<FastifyAppContainer>(containerConfig);
+      break;
+
     case "koa":
       // Create a new Awilix container
       container = createContainer<KoaAppContainer>(containerConfig);

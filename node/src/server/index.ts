@@ -18,19 +18,22 @@ const exitHandler = () => {
 const createServer = () => {
   logger.info("bootstraping server...");
 
-  switch (config.SERVER_TYPE) {
-    // case "fastify":
-    //   return createFastifyServer(container);
-    case "koa":
-      return createKoaServer(configureContainer(config.SERVER_TYPE));
+  let app;
 
+  switch (config.SERVER_TYPE) {
+    case "fastify":
+      return createFastifyServer(configureContainer(config.SERVER_TYPE));
+    case "koa":
+      app = createKoaServer(configureContainer(config.SERVER_TYPE));
+      break;
     default:
-      return createExpressServer(configureContainer("express"));
+      app = createExpressServer(configureContainer("express"));
   }
 
   // Handle Server Exit
   process.once("SIGINT", exitHandler);
   process.once("SIGUSR2", exitHandler);
+  return app;
 };
 
 export { createServer };
