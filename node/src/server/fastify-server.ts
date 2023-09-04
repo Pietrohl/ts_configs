@@ -20,7 +20,7 @@ export async function createFastifyServer(
 ) {
   logger.info("creating fastify server...");
   const app = fastify({
-    logger: true,
+    logger: false,
   });
 
   // Middleware

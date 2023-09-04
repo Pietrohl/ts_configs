@@ -9,12 +9,6 @@ export interface Server {
   listen(port: number, host: string, callback: () => void): void;
 }
 
-const exitHandler = () => {
-  logger.info("shutting down server...");
-  logger.info("closing DB connections...");
-  logger.info("shutdown complete...");
-};
-
 const createServer = () => {
   logger.info("bootstraping server...");
 
@@ -30,9 +24,6 @@ const createServer = () => {
       app = createExpressServer(configureContainer("express"));
   }
 
-  // Handle Server Exit
-  process.once("SIGINT", exitHandler);
-  process.once("SIGUSR2", exitHandler);
   return app;
 };
 
