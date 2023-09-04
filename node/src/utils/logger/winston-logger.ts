@@ -23,14 +23,23 @@ const consoleFormat = winston.format.combine(
 
 const format = winston.format.combine(
   winston.format.timestamp(),
-  winston.format.json(),
+  winston.format.json()
 );
 
-const transports = [
-  new winston.transports.Console({ format: consoleFormat }),
-  // new winston.transports.File({format, filename: "logs/info.log", level: "info"}),
-  //  ,new winston.transports.Http({ host:"", port:"" , level: 'error' }) // Could add a splunk log here
-];
+const transports = [];
+
+if (process.env.NODE_ENV === "production") {
+  transports.push(
+    new winston.transports.File({
+      format,
+      filename: "logs/info.log",
+      level: "info",
+    })
+    //  ,new winston.transports.Http({ host:"", port:"" , level: 'error' }) // Could add a splunk log here
+  );
+} else {
+  transports.push(new winston.transports.Console({ format: consoleFormat }));
+}
 
 export const logger = winston.createLogger({
   level: logLevel,

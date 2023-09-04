@@ -28,5 +28,11 @@ FROM base as final
 # Copy only the built artifacts from the build stage
 COPY --from=build /app/dist ./dist
 
+
+# Set Evnironment Variables
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV CLUSTER=true
+
 # Specify the command to run the application
 CMD ["npm", "start"]

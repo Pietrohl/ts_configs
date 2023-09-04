@@ -1,11 +1,24 @@
 import type { WriteStream } from "fs";
 import pino from "pino";
 
+const targets = [];
+
+if (process.env.NODE_ENV === "production") {
+  targets.push({
+    target: "pino/file",
+    level: "info",
+    options: { destination: `logs/info.log` },
+  });
+} else {
+  targets.push({
+    level: "info",
+    target: "pino-pretty",
+    options: { colorize: true },
+  });
+}
+
 const transports: WriteStream = pino.transport({
-  targets: [
-    // { target: "pino/file", level: "info", options: { destination: `logs/info.log` },    },
-    { level: "info", target: "pino-pretty", options: { colorize: true } },
-  ],
+  targets,
 }) as WriteStream;
 
 export const logger = pino(
