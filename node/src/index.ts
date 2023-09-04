@@ -1,9 +1,8 @@
 import { config } from "./config";
-import { type Express } from "express";
-import { createServer } from "./server";
+import { createServer, type Server } from "./server";
 import { logger } from "./utils/logger";
 
-async function bootstrap(app: Promise<Express> | Express) {
+async function bootstrap(app: Promise<Server> | Server) {
   try {
     (await app).listen(config.PORT, "0.0.0.0", () => {
       logger.info(`running on port: ${config.PORT}`);

@@ -1,35 +1,73 @@
-import { asFunction, asValue, createContainer, InjectionMode } from "awilix";
+import {
+  asFunction,
+  asValue,
+  createContainer,
+  InjectionMode,
+  type AwilixContainer,
+} from "awilix";
 import { logger } from "../utils/logger";
 import { config } from "../config";
-import type { Router } from "express";
+import Express from "express";
+import KoaRouter from "@koa/router";
+
 import {
   type DogRepository,
   type DogService,
-  type DogController,
   createDogRepository,
   createDogService,
   createDogController,
   createDogRouter,
 } from "../features/dogs";
+import type { DogController as DogExpressController } from "../features/dogs/controllers/express/dog.controller";
+import type { DogController as DogKoaController } from "../features/dogs/controllers/koa/dog.controller";
 
 // Add services, controllers and config here
 export interface AppContainer {
   config: typeof config;
   dogRepository: DogRepository;
   dogService: DogService;
-  dogController: DogController;
-  dogRouter: Router;
 
   // Add scoped services, controllers and config here
 }
 
-export const configureContainer = () => {
+// Add express specific services, controllers and config here
+export interface ExpressAppContainer extends AppContainer {
+  dogController: DogExpressController;
+  dogRouter: Express.Router;
+}
+
+// Add koa specific services, controllers and config here
+export interface KoaAppContainer extends AppContainer {
+  dogController: DogKoaController;
+  dogRouter: KoaRouter;
+}
+
+export function configureContainer(
+  containerType: "express"
+): AwilixContainer<ExpressAppContainer>;
+export function configureContainer(
+  containerType: "koa"
+): AwilixContainer<KoaAppContainer>;
+export function configureContainer(
+  containerType: "express" | "koa"
+): AwilixContainer {
   logger.info("initiating container...");
 
-  // Create a new Awilix container
-  const container = createContainer<AppContainer>({
+  const containerConfig = {
     injectionMode: InjectionMode.CLASSIC,
-  });
+  };
+
+  let container: AwilixContainer<KoaAppContainer | ExpressAppContainer>;
+
+  switch (containerType) {
+    case "koa":
+      // Create a new Awilix container
+      container = createContainer<KoaAppContainer>(containerConfig);
+      break;
+    default:
+      // Create a new Awilix container
+      container = createContainer<ExpressAppContainer>(containerConfig);
+  }
 
   // Register dependencies
   container.register({
@@ -50,4 +88,4 @@ export const configureContainer = () => {
   });
 
   return container;
-};
+}

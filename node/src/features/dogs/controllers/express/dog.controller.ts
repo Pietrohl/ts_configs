@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import type { Dog } from "../models/dog.model";
-import type { DogService } from "../services/dog.service";
+import type { Dog } from "../../models/dog.model";
+import type { DogService } from "../../services/dog.service";
 
 type expressHandler = (
   req: Request,

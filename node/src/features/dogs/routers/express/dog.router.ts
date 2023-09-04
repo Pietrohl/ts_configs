@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from "express";
-import { type DogController } from "../controllers/dog.controller";
-import { asyncHandler } from "../../../utils/asyncHandler";
+import { asyncHandler } from "../../../../utils/asyncHandler";
+import type { DogController } from "../../controllers/express/dog.controller";
 
 const createDogRouter = (dogController: DogController) => {
   const router = Router();
