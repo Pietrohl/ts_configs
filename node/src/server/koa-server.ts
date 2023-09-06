@@ -5,7 +5,7 @@ import type { KoaAppContainer } from "../container";
 import helmet from "koa-helmet";
 import cors from "@koa/cors";
 import { bodyParser } from "@koa/bodyparser";
-import { koaLogger } from "../middleware/httpLogger/koaLogger.middleware";
+import { koaLogger } from "../middleware/httpLogger";
 import { logger } from "../utils/logger";
 
 function attachRoutes(app: Koa, container: AwilixContainer<KoaAppContainer>) {

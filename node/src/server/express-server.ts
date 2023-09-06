@@ -5,7 +5,7 @@ import e from "express";
 import helmet from "helmet";
 import { type ExpressAppContainer } from "../container";
 import { logger } from "../utils/logger";
-import { morganMiddleware } from "../middleware/httpLogger/morgan.middleware";
+import { morganMiddleware } from "../middleware/httpLogger";
 
 const attachRoutes = (
   app: e.Express,
