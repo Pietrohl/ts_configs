@@ -1,4 +1,3 @@
-import type { WriteStream } from "fs";
 import pino from "pino";
 
 const targets = [];
@@ -17,17 +16,18 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const transports: WriteStream = pino.transport({
-  targets,
-}) as WriteStream;
 
-export const logger = pino(
+export const pinoConfig = 
   {
     level: process.env.NODE_ENV === "production" ? "info" : "debug",
     customLevels: {
       http: 25,
     },
     timestamp: pino.stdTimeFunctions.isoTime,
-  },
-  transports
-);
+    transport: {
+      targets,
+    }
+  }
+
+
+export const logger = pino(pinoConfig);

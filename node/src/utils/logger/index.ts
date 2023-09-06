@@ -13,3 +13,4 @@ export interface Logger {
 export const logger: Logger =
   config.LOGGER === "winston" ? winstonLogger : pinoLogger;
 
+export { pinoConfig } from "./pino-logger";

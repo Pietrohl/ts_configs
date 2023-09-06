@@ -4,6 +4,7 @@ import type { FastifyAppContainer } from "../container";
 import { logger } from "../utils/logger";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
+import { pinoConfig } from "../utils/logger";
 
 async function attachRoutes(
   app: FastifyInstance,
@@ -20,7 +21,7 @@ export async function createFastifyServer(
 ) {
   logger.info("creating fastify server...");
   const app = fastify({
-    logger: false,
+    logger: pinoConfig,
   });
 
   // Middleware
