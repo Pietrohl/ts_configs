@@ -1,10 +1,15 @@
-import type { AwilixContainer } from "awilix";
 import fastify, { type FastifyInstance } from "fastify";
+import helmet from "@fastify/helmet";
+import cors from "@fastify/cors";
+import swagger from "@fastify/swagger";
+import type { AwilixContainer } from "awilix";
 import type { FastifyAppContainer } from "../container";
 import { logger } from "../utils/logger";
-import cors from "@fastify/cors";
-import helmet from "@fastify/helmet";
 import { pinoConfig } from "../utils/logger";
+import {
+  createOpenapiConfig,
+  swaggerUi,
+} from "../middleware/swagger/fastify-swagger.middleware";
 
 async function attachRoutes(
   app: FastifyInstance,
@@ -27,13 +32,20 @@ export async function createFastifyServer(
   // Middleware
   await app.register(helmet);
   await app.register(cors);
-
-  await attachRoutes(app, container);
-
-  return app.then((app) => ({
-    ...app,
-    listen: (port: number, host: string, callback: () => void) => {
-      app.listen({ port, host }, callback);
-    },
+  await app.register(swagger, createOpenapiConfig({
+    
   }));
+  
+  // Attaching Routes
+  await attachRoutes(app, container);
+  await app.register(swaggerUi);
+
+  return app.then((app) => {
+    return {
+      ...app,
+      listen: (port: number, host: string, callback: () => void) => {
+        app.listen({ port, host }, callback);
+      },
+    };
+  });
 }

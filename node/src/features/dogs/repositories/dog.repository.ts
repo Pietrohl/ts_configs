@@ -3,7 +3,8 @@ import { type Dog } from "../models/dog.model";
 export interface DogRepository {
   getAllDogs(): Promise<Dog[]>;
   getDogById(id: number): Promise<Dog | undefined>;
-  addDog(dog: Dog): Promise<void>;
+  addDog(dog: Omit<Dog, "id">): Promise<void>;
+  updateDog(id: number, dog: Dog): Promise<Dog | undefined>;
 }
 
 export function createDogRepository(): DogRepository {
@@ -16,17 +17,25 @@ export function createDogRepository(): DogRepository {
       });
       return dogs;
     },
-    getDogById: async (id: number) => {
+    getDogById: async (id) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1);
       });
       return dogs.find((dog) => dog.id === id);
     },
-    addDog: async (dog: Dog) => {
+    addDog: async (dog) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1);
       });
-      dogs.push(dog);
+      const id = dogs.length;
+      dogs.push({ id, ...dog });
+    },
+    updateDog: async (id, dog) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1);
+      });
+      dogs[id] = dog;
+      return dogs[id];
     },
   };
 }
