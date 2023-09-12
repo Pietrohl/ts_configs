@@ -1,11 +1,15 @@
-import Router from "@koa/router";
-import type { Dog } from "../../models/dog.model";
 import type { DogService } from "../../services/dog.service";
+import type { DogDTO } from "../../models/dog.DTO";
+import type { DefaultContext, DefaultState, Middleware } from "koa";
+
+type UpdateContext = DefaultContext & { params: { id: string } };
+
 
 export type DogController = {
-  getAllDogs: Router.Middleware;
-  getDogById: Router.Middleware;
-  addDog: Router.Middleware;
+  getAllDogs: Middleware
+  getDogById: Middleware<DefaultState, UpdateContext>;
+  addDog: Middleware;
+  updateDog: Middleware<DefaultState, UpdateContext>;
 };
 
 export function createDogController(dogService: DogService): DogController {
@@ -26,9 +30,17 @@ export function createDogController(dogService: DogService): DogController {
       }
     },
     addDog: async (ctx) => {
-      await dogService.addDog(ctx.request.body as Dog);
+      const dto = ctx.body as DogDTO;
+      await dogService.addDog(dto);
       ctx.status = 201;
       ctx.body = { message: "Dog added successfully" };
+    },
+    updateDog: async (ctx) => {
+      const id = parseInt(ctx.params.id);
+      const dto = ctx.body as DogDTO;
+      await dogService.updateDog({ id, ...dto });
+      ctx.status = 201;
+      ctx.body = { message: "Dog updated successfully" };
     },
   };
 }

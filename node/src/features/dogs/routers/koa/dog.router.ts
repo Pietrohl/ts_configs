@@ -1,5 +1,6 @@
 import Router from "@koa/router";
 import type { DogController } from "../../controllers/koa/dog.controller";
+import { DogDTO } from "../../models/dog.DTO";
 
 const createDogRouter = (dogController: DogController) => {
   const router = new Router();
@@ -8,7 +9,9 @@ const createDogRouter = (dogController: DogController) => {
 
   router.get("/:id", dogController.getDogById);
 
-  router.post("/", dogController.addDog);
+  router.post("/", { body: DogDTO }, dogController.addDog);
+
+  router.put("/:id", { body: DogDTO }, dogController.updateDog);
 
   return router;
 };
