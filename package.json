@@ -7,8 +7,10 @@
     "test": "test"
   },
   "exports": "./cli/src/index.js",
-
   "bin": "./cli/src/index.js",
   "author": "Pietro Labadessa",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^9.2.11"
+  }
 }
