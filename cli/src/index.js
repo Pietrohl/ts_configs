@@ -82,11 +82,12 @@ const copyCommonFiles = (folder = 'node') => {
 
 
 const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
-
+    
     const templatePath = path.resolve(__dirname, '../../' + folder + '/' + template+'/src');
     const targetPath = path.join(repoPath, '/src/');
-
+    
     try {
+        fs.mkdirSync(targetPath);
         copyFiles(templatePath, targetPath);
         console.log(`Copied src files to ${targetPath}`);
     } catch (err) {
