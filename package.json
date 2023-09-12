@@ -6,9 +6,9 @@
   "scripts": {
     "test": "test"
   },
-  "bin": {
-    "start": "./cli/src/index.js"
-  },
+  "exports": "./cli/src/index.js",
+
+  "bin": "./cli/src/index.js",
   "author": "Pietro Labadessa",
   "license": "ISC"
 }
