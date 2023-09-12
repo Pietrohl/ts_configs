@@ -4,8 +4,10 @@
   "description": "Node project starter",
   "main": "index.js",
   "scripts": {
-    "start": "node cli/src/index.js",
     "test": "test"
+  },
+  "bin": {
+    "start": "./cli/src/index.js"
   },
   "author": "Pietro Labadessa",
   "license": "ISC"
