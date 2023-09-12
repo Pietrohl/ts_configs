@@ -19,7 +19,7 @@ const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
         try {
             fs.mkdirSync(repoPath);
-            console.log(`Created repository ${repoName} with nested folder ${projectName}`);
+            console.log(`Created repository ${repoName} on folder ${repoPath}`);
         } catch (err) {
             console.error(err);
             process.exit(1);
@@ -62,7 +62,7 @@ const copyCommonFiles = (folder = 'node') => {
 
 const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
 
-    const templatePath = path.resolve(__dirname, '../../' + folder + '/' + template);
+    const templatePath = path.resolve(__dirname, '../../' + folder + '/' + template+'/src');
     const targetPath = path.join(repoPath, '/src/');
 
     try {
@@ -127,8 +127,8 @@ const main = async () => {
         ]);
 
         createRepo(projectName);
-        // copyCommonFiles(enviroment);
-        // copyTemplateFiles(template, enviroment);
+        copyCommonFiles(enviroment);
+        copyTemplateFiles(template, enviroment);
         createPackage(template, enviroment);
     }
 };
