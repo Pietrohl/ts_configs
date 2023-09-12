@@ -1,8 +1,10 @@
+#!/usr/bin/env node
+
 const path = require('path');
 const FileSystem = require('fs');
 
 
-function createFastifyProject() {
+function createFastifyPackage() {
     const commonPackage = require(path.resolve(__dirname, '../../node/common/package.json'));
     const fastifyPackage = require(path.resolve(__dirname, '../../node/fastify/fastify.package.json'));
 
@@ -16,4 +18,4 @@ function createFastifyProject() {
 
 }
 
-createFastifyProject();
+createFastifyPackage();
