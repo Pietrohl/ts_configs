@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
+const { exec } = require('child_process');
 
 const projectName = process.argv[2];
 
@@ -18,20 +19,31 @@ const repoPath = path.resolve('./', projectName);
 
 function isFile(target) {
     return fs.statSync(target).isFile();
-  }
-  
+}
+
 
 function copyFiles(source, target) {
     const dirs = fs.readdirSync(source);
     for (const d of dirs) {
-      if (isFile(path.join(source, d))) {
-        fs.copyFileSync(path.join(source, d), path.join(target, d));
-      } else {
-        fs.mkdirSync(path.join(target, d));
-        copyFiles(path.join(source, d), path.join(target, d));
-      }
+        if (isFile(path.join(source, d))) {
+            fs.copyFileSync(path.join(source, d), path.join(target, d));
+        } else {
+            fs.mkdirSync(path.join(target, d));
+            copyFiles(path.join(source, d), path.join(target, d));
+        }
     }
-  }
+}
+
+
+
+const runCommand = command => {
+    try {
+        execSync(command, { stdio: 'inherit' });
+    } catch (err) {
+        console.error(`Failed to execute ${command}. `, err);
+        process.exit(1);
+    }
+}
 
 
 
@@ -82,10 +94,10 @@ const copyCommonFiles = (folder = 'node') => {
 
 
 const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
-    
-    const templatePath = path.resolve(__dirname, '../../' + folder + '/' + template+'/src');
+
+    const templatePath = path.resolve(__dirname, '../../' + folder + '/' + template + '/src');
     const targetPath = path.join(repoPath, '/src/');
-    
+
     try {
         fs.mkdirSync(targetPath);
         copyFiles(templatePath, targetPath);
@@ -137,22 +149,36 @@ const main = async () => {
         console.error('The "client" option is not implemented yet.');
         return;
     }
-
+    let template;
     if (enviroment === 'node') {
-        const { template } = await inquirer.prompt([
+        template = (await inquirer.prompt([
             {
                 type: 'list',
                 name: 'template',
                 message: 'Select one of three options',
                 choices: ['fastify', 'express', 'koa'],
             }
-        ]);
+        ])).template;
 
-        createRepo(projectName);
-        copyCommonFiles(enviroment);
-        copyTemplateFiles(template, enviroment);
-        createPackage(template, enviroment);
     }
+
+    const { packageMan } = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'packageMan',
+            message: 'Select the package manager you want to use',
+            choices: ['npm', 'yarn', 'pnpm'],
+            default: 'npm'
+        }
+    ]);
+
+
+
+    createRepo(projectName);
+    copyCommonFiles(enviroment);
+    copyTemplateFiles(template, enviroment);
+    createPackage(template, enviroment);
+    runCommand(`cd ${repoPath} && ${packageMan} ${packageMan === 'yarn' ? "" : 'install'}`);
 };
 
 main();
