@@ -28,7 +28,7 @@ function copyFiles(source, target) {
         fs.copyFileSync(path.join(source, d), path.join(target, d));
       } else {
         fs.mkdirSync(path.join(target, d));
-        fs.copyFiles(path.join(source, d), path.join(target, d));
+        copyFiles(path.join(source, d), path.join(target, d));
       }
     }
   }
@@ -87,7 +87,7 @@ const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
     const targetPath = path.join(repoPath, '/src/');
 
     try {
-        copyFiles(templatePath, repoPath);
+        copyFiles(templatePath, targetPath);
         console.log(`Copied src files to ${targetPath}`);
     } catch (err) {
         console.error(err);
@@ -149,7 +149,7 @@ const main = async () => {
 
         createRepo(projectName);
         copyCommonFiles(enviroment);
-        // copyTemplateFiles(template, enviroment);
+        copyTemplateFiles(template, enviroment);
         createPackage(template, enviroment);
     }
 };
