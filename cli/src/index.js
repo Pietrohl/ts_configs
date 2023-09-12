@@ -13,7 +13,7 @@ if (!projectName) {
 
 
 
-const repoPath = path.resolve(process.cwd(), '/' + projectName);
+const repoPath = path.resolve('./', projectName);
 
 const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
