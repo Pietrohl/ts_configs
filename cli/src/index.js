@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 
 const projectName = process.argv[2];
 
