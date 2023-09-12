@@ -5,6 +5,7 @@ import os from "os";
 import cluster from "cluster";
 import process from "process";
 import type { FastifyInstance } from "fastify";
+import { configureContainer } from "./container";
 
 async function bootstrap(
   app: Promise<FastifyInstance> | FastifyInstance
@@ -37,4 +38,4 @@ async function bootstrap(
   }
 }
 
-void bootstrap(createServer());
+void bootstrap(createServer(configureContainer()));

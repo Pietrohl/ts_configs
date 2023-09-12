@@ -35,7 +35,7 @@ export interface AppContainer {
   // Add scoped services, controllers and config here
 }
 
-export function configureContainer(): AwilixContainer {
+export function configureContainer(): AwilixContainer<AppContainer> {
   logger.info("initiating container...");
 
   const containerConfig = {
