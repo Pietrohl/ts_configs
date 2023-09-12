@@ -11,7 +11,9 @@ if (!projectName) {
     process.exit(1);
 }
 
-const repoPath = path.resolve('/' + projectName);
+
+
+const repoPath = path.resolve(process.cwd(), '/' + projectName);
 
 const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
@@ -83,6 +85,23 @@ const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
 
 
 const main = async () => {
+
+    const { consent } = await inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'consent',
+            message: 'Create a new project on ' + repoPath + '?',
+            default: false,
+        }
+    ]);
+
+    if (!consent) {
+        console.log('Exiting...');
+        process.exit(1);
+    }
+
+
+
     const { enviroment } = await inquirer.prompt([
         {
             type: 'list',
