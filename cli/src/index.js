@@ -15,6 +15,27 @@ if (!projectName) {
 
 const repoPath = path.resolve('./', projectName);
 
+
+function isFile(target) {
+    return fs.statSync(target).isFile();
+  }
+  
+
+function copyFiles(source, target) {
+    const dirs = fs.readdirSync(source);
+    for (const d of dirs) {
+      if (isFile(path.join(source, d))) {
+        fs.copyFileSync(path.join(source, d), path.join(target, d));
+      } else {
+        fs.mkdirSync(path.join(target, d));
+        fs.copyFiles(path.join(source, d), path.join(target, d));
+      }
+    }
+  }
+
+
+
+
 const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
         try {
@@ -51,7 +72,7 @@ const copyCommonFiles = (folder = 'node') => {
     const targetPath = repoPath;
 
     try {
-        fs.copyFileSync(commonPath, repoPath);
+        copyFiles(commonPath, repoPath);
         console.log(`Copied src files to ${targetPath}`);
     } catch (err) {
         console.error(err);
@@ -66,7 +87,7 @@ const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
     const targetPath = path.join(repoPath, '/src/');
 
     try {
-        fs.copyFileSync(templatePath, repoPath);
+        copyFiles(templatePath, repoPath);
         console.log(`Copied src files to ${targetPath}`);
     } catch (err) {
         console.error(err);
@@ -128,7 +149,7 @@ const main = async () => {
 
         createRepo(projectName);
         copyCommonFiles(enviroment);
-        copyTemplateFiles(template, enviroment);
+        // copyTemplateFiles(template, enviroment);
         createPackage(template, enviroment);
     }
 };
