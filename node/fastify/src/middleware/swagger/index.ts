@@ -1,1 +1,1 @@
-export * from 'fastify-swagger.middleware'
+export * from './fastify-swagger.middleware'

@@ -15,6 +15,7 @@ import {
   createDogService,
   createDogController,
   createDogRouter,
+  DogController,
 } from "../features/dogs";
 import type { FastifyPluginCallback } from "fastify";
 

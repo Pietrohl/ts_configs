@@ -17,12 +17,9 @@
     "lint": "eslint \"{src,apps,libs,test,spec}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@fastify/awilix": "^3.2.0",
     "@fastify/cookie": "^9.0.4",
     "@fastify/cors": "^8.3.0",
     "@fastify/helmet": "^11.0.0",
-    "@fastify/passport": "^2.3.0",
-    "@fastify/redis": "^6.1.1",
     "@fastify/swagger": "^8.9.0",
     "@fastify/type-provider-typebox": "^3.5.0",
     "@koa/bodyparser": "^5.0.0",
@@ -42,12 +39,10 @@
     "koa-logger": "^3.2.1",
     "morgan": "1.10.0",
     "passport": "^0.6.0",
-    "pino-pretty": "^10.2.0",
-    "redis": "^4.6.6",
-    "redoc": "^2.1.1",
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "pino-pretty": "^10.2.0",
     "@jest/globals": "^29.5.0",
     "@swc/cli": "0.1.62",
     "@swc/core": "1.3.57",
