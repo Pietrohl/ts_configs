@@ -17,7 +17,7 @@ const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
         try {
             fs.mkdirSync(repoPath);
-            console.log(`Created repository ${repoName} with nested folder ${folderName}`);
+            console.log(`Created repository ${repoName} with nested folder ${projectName}`);
         } catch (err) {
             console.error(err);
             process.exit(1);
