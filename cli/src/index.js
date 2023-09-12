@@ -11,7 +11,7 @@ if (!projectName) {
     process.exit(1);
 }
 
-const repoPath = path.join(__dirname, projectName);
+const repoPath = path.join('./', projectName);
 
 const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
@@ -44,7 +44,7 @@ const createPackage = (template = 'fastify', folder = 'node') => {
 
 
 const copyCommonFiles = (folder = 'node') => {
-    
+
     const commonPath = path.resolve(__dirname, '../../' + folder + '/common');
     const targetPath = path.resolve(repoPath, './src');
 
