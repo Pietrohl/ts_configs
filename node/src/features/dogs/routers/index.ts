@@ -6,7 +6,7 @@ import { createDogRouter as createDogFastifyRouter } from "./fastify/dog.router"
 import { createDogRouter as createDogExpressRouter } from "./express/dog.router";
 import type { AppContainer } from "../../../container";
 import Express from "express";
-import KoaRouter from "@koa/router";
+import KoaRouter from "../../../../types/koa__router";
 import type { FastifyPluginCallback } from "fastify";
 
 export function createDogRouter(

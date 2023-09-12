@@ -8,7 +8,7 @@ import {
 import { logger } from "../utils/logger";
 import { config } from "../config";
 import Express from "express";
-import KoaRouter from "@koa/router";
+import KoaRouter from "../../types/koa__router";
 
 import {
   type DogRepository,

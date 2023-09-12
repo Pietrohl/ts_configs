@@ -4,7 +4,7 @@ export interface DogRepository {
   getAllDogs(): Promise<Dog[]>;
   getDogById(id: number): Promise<Dog | undefined>;
   addDog(dog: Omit<Dog, "id">): Promise<void>;
-  updateDog(id: number, dog: Dog): Promise<Dog | undefined>;
+  updateDog(dog: Dog): Promise<Dog | undefined>;
 }
 
 export function createDogRepository(): DogRepository {
@@ -30,10 +30,11 @@ export function createDogRepository(): DogRepository {
       const id = dogs.length;
       dogs.push({ id, ...dog });
     },
-    updateDog: async (id, dog) => {
+    updateDog: async (dog) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1);
       });
+      const id = dog.id;
       dogs[id] = dog;
       return dogs[id];
     },

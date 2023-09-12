@@ -57,7 +57,7 @@ export function createDogController(dogService: DogService): DogController {
     updateDog: async (req, res) => {
       const id = parseInt(req.params.id);
       const dto = req.body;
-      const dog = await dogService.updateDog(id, { id, ...dto });
+      const dog = await dogService.updateDog({ id, ...dto });
 
       if (dog) {
         return dog;

@@ -10,6 +10,7 @@ import {
   createOpenapiConfig,
   swaggerUi,
 } from "../middleware/swagger/fastify-swagger.middleware";
+import { TypeBoxValidatorCompiler, type TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 
 async function attachRoutes(
   app: FastifyInstance,
@@ -32,10 +33,12 @@ export async function createFastifyServer(
   // Middleware
   await app.register(helmet);
   await app.register(cors);
-  await app.register(swagger, createOpenapiConfig({
-    
-  }));
-  
+  await app.register(swagger, createOpenapiConfig());
+
+  app.withTypeProvider<TypeBoxTypeProvider>();
+  app.setValidatorCompiler(TypeBoxValidatorCompiler)
+
+
   // Attaching Routes
   await attachRoutes(app, container);
   await app.register(swaggerUi);

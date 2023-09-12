@@ -5,7 +5,7 @@ export interface DogService {
   getAllDogs(): Promise<Dog[]>;
   getDogById(id: number): Promise<Dog | undefined>;
   addDog(dog: Omit<Dog, "id">): Promise<void>;
-  updateDog(id: number, dog: Dog): Promise<Dog | undefined>;
+  updateDog(dog: Dog): Promise<Dog | undefined>;
 }
 
 export function createDogService(dogRepository: DogRepository): DogService {
@@ -16,11 +16,11 @@ export function createDogService(dogRepository: DogRepository): DogService {
     getDogById: async (id: number) => {
       return dogRepository.getDogById(id);
     },
-    addDog: async (dog: Dog) => {
+    addDog: async (dog) => {
       await dogRepository.addDog(dog);
     },
-    updateDog: async (id: number, dog: Dog) => {
-      return dogRepository.updateDog(id, dog);
+    updateDog: async (dog) => {
+      return dogRepository.updateDog(dog);
     },
   };
 }
