@@ -4,14 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
 
-const projectName = 'test';
+const projectName = process.argv[2];
 
 if (!projectName) {
     console.error("You must provide a repository name as second argument.");
     process.exit(1);
 }
 
-const repoPath = './inner-test';
+const repoPath = path.resolve('/' + projectName);
 
 const createRepo = (repoName) => {
     if (!fs.existsSync(repoPath)) {
@@ -39,14 +39,14 @@ const createPackage = (template = 'fastify', folder = 'node') => {
         ...fastifyPackage,
     };
 
-    fs.writeFileSync(repoPath, JSON.stringify(package, null, 4));
+    fs.writeFileSync(path.join(repoPath + '/package.json'), JSON.stringify(package, null, 4));
 }
 
 
 const copyCommonFiles = (folder = 'node') => {
 
     const commonPath = path.resolve(__dirname, '../../' + folder + '/common');
-    const targetPath = path.resolve(repoPath, './src');
+    const targetPath = repoPath;
 
     try {
         fs.copyFileSync(commonPath, repoPath);
@@ -61,7 +61,7 @@ const copyCommonFiles = (folder = 'node') => {
 const copyTemplateFiles = (template = 'fastify', folder = 'node') => {
 
     const templatePath = path.resolve(__dirname, '../../' + folder + '/' + template);
-    const targetPath = path.resolve(repoPath, src);
+    const targetPath = path.join(repoPath, '/src/');
 
     try {
         fs.copyFileSync(templatePath, repoPath);
@@ -107,7 +107,7 @@ const main = async () => {
             }
         ]);
 
-        // createRepo(projectName);
+        createRepo(projectName);
         // copyCommonFiles(enviroment);
         // copyTemplateFiles(template, enviroment);
         createPackage(template, enviroment);
