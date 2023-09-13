@@ -30,14 +30,14 @@ export function createDogController(dogService: DogService): DogController {
       }
     },
     addDog: async (ctx) => {
-      const dto = ctx.body as DogDTO;
+      const dto = ctx.request.body as DogDTO;
       await dogService.addDog(dto);
       ctx.status = 201;
       ctx.body = { message: "Dog added successfully" };
     },
     updateDog: async (ctx) => {
       const id = parseInt(ctx.params.id);
-      const dto = ctx.body as DogDTO;
+      const dto = ctx.request.body as DogDTO;
       await dogService.updateDog({ id, ...dto });
       ctx.status = 201;
       ctx.body = { message: "Dog updated successfully" };
